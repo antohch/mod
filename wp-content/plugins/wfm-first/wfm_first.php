@@ -7,9 +7,10 @@ Version: 1.0
 Author: Anon
 Author URI: http://hz.com
 */
-
+include dirname(__FILE__) . '/deactivate.php';
 
 register_activation_hook(__FILE__, 'wfm_activate');//процедурный способ привязки к хуку
+register_deactivation_hook(__FILE__, 'wfm_deactivate');//исполняется при деактивиции
 
 function wfm_activate(){
 	wp_mail(get_bloginfo("admin_email"),'Плагин активирован', 'Произошла успешная активация плагина');
