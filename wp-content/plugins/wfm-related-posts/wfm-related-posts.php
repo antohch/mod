@@ -6,6 +6,17 @@ Version: Номер версии плагина, например: 1.0
 Author: Тоха
 */
 add_filter('the_content', 'wfm_related_posts');//установить фильтр к функции the_content
+add_action('wp_enqueue_scripts', 'wp_register_styles_scripts');//подключить js скрипт и стили. Подвесить на экшен
+
+function wp_register_styles_scripts(){
+	wp_register_script('wfm-jquery-tools-js', plugins_url('js/jquery.tools.min.js', __FILE__), array('jquery'));//зарегистрировать js скрипт
+	wp_register_script('wfm-script-tools-js', plugins_url('js/wfm-scripts.js', __FILE__), array('jquery'));//зарегистрировать js скрипт
+	wp_register_style('wfm-related-post', plugins_url('css/wfm_style.css', __FILE__));//зарегистрируем стили
+	//можно было и не регистрировать, тогда пришлось бы указывать второй параметр в подключении
+	wp_enqueue_script('wfm-jquery-tools-js');//подключить скрипты
+	wp_enqueue_script('wfm-script-tools-js');//подключить скрипты
+	wp_enqueue_style('wfm-related-post');//подключить стили
+}
 
 function wfm_related_posts($content){
 	if(!is_single()) return $content;//если мы находимся вне записи, то вывести контент
@@ -31,6 +42,7 @@ function wfm_related_posts($content){
 		}
 		$content .= '<a href="' . get_permalink() . '">' . $img . '</a>';//составим ссылку
         }
+		$content .= "<div class='wfm-clear'></div>";
         $content .= '</div>';
         wp_reset_query();//сбросить глобальные атрибуты, если не сделать, то будут работать некорректно остальные плагины
     }
