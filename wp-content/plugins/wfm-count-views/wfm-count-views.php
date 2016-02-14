@@ -12,7 +12,7 @@ add_filter('the_content', 'wfm_post_viwes');
 add_action('wp_head', 'wfm_add_view');
 
 function wfm_create_filed(){
-	global $wpdb;
+	global $wpdb;//глобальная переменная для работы с базой данных
 	if(!wfm_check_field('wfm_views')){
 		$query = "ALTER TABLE $wpdb->posts ADD wfm_views INT NOT NULL DEFAULT '0'";
 		$wpdb->query($query);
@@ -21,7 +21,7 @@ function wfm_create_filed(){
 
 function wfm_post_viwes($content){
 	if (is_page()) return $content;
-	global $post;
+	global $post;//глобальная переменная для работы с постами
 	$views = $post->wfm_views;
 	if (is_single()) $views += 1;
 	return $content. "<b>Кол-во просмотров: </b>".$views;
