@@ -25,16 +25,19 @@ function wfm_map_2($atts){
 		'cords2' => $cords2
 	);
 	add_action('wp_footer', 'wfm_styles_scripts');
-	return '<div id="map" style="width:650px; height:400px"></div>';
+	return '<div id="map"></div>';
 }
 //подключить скрипт с google картами
 function wfm_styles_scripts(){
 	global $wfm_maps_array;
 	wp_register_script('wfm-maps-google', 'https://maps.googleapis.com/maps/api/js?callback=initMap' );
 	wp_register_script('wfm-maps-2', plugins_url('wfm-maps2.js', __FILE__));
+	wp_register_style('wfm-style', plugins_url('wfm-style.css', __FILE__));
 	
 	wp_enqueue_script('wfm-maps-google');
 	wp_enqueue_script('wfm-maps-2');
+	wp_enqueue_style('wfm-style');
 	//передать массив из php в js скрипт
 	wp_localize_script('wfm-maps-2', 'wfmObj', $wfm_maps_array);
+	
 }
