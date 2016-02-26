@@ -1,3 +1,8 @@
 jQuery(document).ready(function($){
-	alert(111);
+	$('ul.accordion').dcAccordion({
+		eventType: 'click',
+		disableLink: false,
+		hoverDelay: 300,
+		speed: 'slow'
+	});
 });

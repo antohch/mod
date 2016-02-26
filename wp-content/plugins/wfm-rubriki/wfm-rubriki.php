@@ -22,6 +22,46 @@ class WFM_Cats extends WP_Widget{
 		);
 		parent::__construct('wfm_cats', '', $arg);
 	}
+	
+	function form($instance){
+		extract($instance);
+		$title = !empty($title) ? esc_attr($title) : '';
+		$eventType = isset($eventType) ? $eventType : 'hover';
+		$hoverDelay = isset($hoverDelay) ? $hoverDelay : 100;
+		$speed = isset($speed) ? $speed : 400;
+		$exclude = isset($exclude) ? $exclude : '';
+		
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title')?>">Заголовок</label>
+			<input type="text" name="<?php echo $this->get_field_name('title')?>" id="" value="<?php echo $title;?>" class="widefat">
+		</p>
+		
+		<p>
+			<label for="<?php echo $this->get_field_id('eventType')?>">Способ раскрытия:</label>
+			<select class="widefat" name="<?php echo $this->get_field_name('eventType');?>">
+				<option value="click" <?php selected('click', $eventType, true); ?>>По клику</option>
+				<option value="hover" <?php selected('hover', $eventType, true); ?>>По наведению</option>
+			</select>
+		</p>
+		
+		<p>
+			<label for="<?php echo $this->get_field_id('hoverDelay')?>">Пауза перед раскрытием (в мс.)</label>
+			<input type="text" name="<?php echo $this->get_field_name('hoverDelay')?>" id="" value="<?php echo $hoverDelay;?>" class="widefat">
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('speed')?>">Скорость анимации (в мс.)</label>
+			<input type="text" name="<?php echo $this->get_field_name('speed')?>" id="" value="<?php echo $speed;?>" class="widefat">
+		</p>
+		
+		<p>
+			<label for="<?php echo $this->get_field_id('exclude')?>">Исключить категории (ID катеорий через запятую)</label>
+			<input type="text" name="<?php echo $this->get_field_name('exclude')?>" id="" value="<?php echo $exclude;?>" class="widefat">
+		</p>
+		<?php
+		
+	}
+	
 	function widget($args, $instance){
 		extract($args);
 		extract($instance);
