@@ -15,6 +15,7 @@ function wfm_cats(){
 }
 
 class WFM_Cats extends WP_Widget{
+	public $wfm_cats_array;
 	function __construct(){
 		$arg = array(
 			'name' => 'Рубрики Акардион',
@@ -66,6 +67,12 @@ class WFM_Cats extends WP_Widget{
 		extract($args);
 		extract($instance);
 		
+		$this->wfm_cats_array = array(
+			'eventType' => $eventType,
+			'hoverDelay' => $hoverDelay,
+			'speed' => $speed,
+		);
+
 		add_action('wp_footer', array($this, 'wfm_styles_scripts'));
 		
 		$title = apply_filters('widget_title', $title);
@@ -75,7 +82,7 @@ class WFM_Cats extends WP_Widget{
 			array(
 				'title_li' => '',
 				'echo' => false,
-				//'exclude' => $exclude,
+				'exclude' => $exclude,
 				//'' => '',
 			)
 		);
@@ -90,13 +97,26 @@ class WFM_Cats extends WP_Widget{
 		$html .= $after_widget;
 		echo $html;
 	}
+
+	function update($new_instance, $old_instance){
+		$new_instance['title'] = !empty($new_instance['title']) ? strip_tags($new_instance['title']) : '';
+		$new_instance['eventType'] = ($new_instance['eventType'] == 'click') ? 'click' : 'hover';
+		$new_instance['hoverDelay'] = ((int)$new_instance['hoverDelay']) ? $new_instance['hoverDelay'] : 100;
+		$new_instance['speed'] = ((int)$new_instance['speed']) ? $new_instance['speed'] : 400;
+		$new_instance['exclude'] = !empty($new_instance['exclude']) ? strip_tags($new_instance['exclude']) : '';
+		return $new_instance;
+	}
+
 	function wfm_styles_scripts(){
 		wp_register_script('wfm-cookie', plugins_url('js/jquery.cookie.js', __FILE__), array('jquery'));
 		wp_register_script('wfm-hoverInten', plugins_url('js/jquery.hoverIntent.minified.js', __FILE__), array('wfm-cookie'));
 		wp_register_script('wfm-accordion', plugins_url('js/jquery.accordion.js', __FILE__), array('wfm-hoverInten'));
 		wp_register_script('wfm-scripts', plugins_url('js/wfm-scripts.js', __FILE__), array('wfm-accordion'));
+		wp_register_style('wfm-style', plugins_url('css/wfm-style.css', __FILE__));
 		
 		wp_enqueue_script('wfm-scripts');
+		wp_localize_script('wfm-scripts', 'wfm_obj', $this->wfm_cats_array);
+		wp_enqueue_style('wfm-style');
 	}
 	/*function wfm_remove_title($atr){
 		$str = preg_replace('#title="[^"]+"#', '', $atr);
