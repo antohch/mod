@@ -13,6 +13,7 @@
 	</div><!-- .site-content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
+		<?php echo get_option('wfm_first_option');?>
 		<div class="site-info">
 			<?php
 				/**
