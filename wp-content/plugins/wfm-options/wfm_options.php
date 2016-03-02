@@ -7,7 +7,7 @@ Version: Номер версии плагина, например: 1.0
 Author: Имя автора плагина
 Author URI: http://страница_автора_плагина
 */
-/*
+/*1
 add_action("admin_init", 'wfm_first_option');
 
 function wfm_first_option(){
