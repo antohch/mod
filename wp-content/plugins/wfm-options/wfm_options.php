@@ -30,6 +30,15 @@ function wfm_option_cb(){
 }
 */
 add_action( 'admin_init', 'wfm_theme_options' );
+add_action('wp_enqueue_scripts', 'wfm_scripts_styles');
+
+function wfm_scripts_styles(){
+	$wfm_theme_options = get_option('wfm_theme_options');
+	wp_register_script('wfm-options', plugins_url('wfm-option.js', __FILE__), array('jquery'));
+	
+	wp_enqueue_script('wfm-options');
+	wp_localize_script('wfm-options', 'wfmObj', $wfm_theme_options);
+}
 
 function wfm_theme_options(){
 	register_setting( 'general', 'wfm_theme_options' );

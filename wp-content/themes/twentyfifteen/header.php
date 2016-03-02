@@ -8,7 +8,11 @@
  * @subpackage Twenty_Fifteen
  * @since Twenty Fifteen 1.0
  */
-?><!DOCTYPE html>
+?>
+<?php
+$options = get_option('wfm_theme_options');
+?>
+<!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
