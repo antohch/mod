@@ -38,7 +38,7 @@ class WFM_VK extends WP_Widget{
 
 	private function wfm_get_posts_vk(){
 		if(is_numeric($this->title)){
-			$id = "owner_id={$this->title}";
+			$id = "owner_id={$this->title}";d
 			$this->title = "id{$this->title}";
 		}else{
 			$id = "domain={$this->title}";
